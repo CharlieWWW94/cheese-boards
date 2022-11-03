@@ -1,6 +1,12 @@
 const { Sequelize, Model, DataTypes } = require("sequelize");
 
 class Cheese extends Model {}
-Board.init({});
+Cheese.init(
+  {
+    title: { type: DataTypes.TEXT },
+    description: { type: DataTypes.TEXT },
+  },
+  { sequelize: db }
+);
 
 module.exports = Cheese;
