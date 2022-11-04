@@ -1,5 +1,5 @@
 const Cheese = require("../../models/cheese.model");
-
+const db = require("../../db/db");
 describe("Test Cheese model for correct properties", () => {
   beforeEach(async () => {
     freshCheese = await Cheese.create({
@@ -9,9 +9,7 @@ describe("Test Cheese model for correct properties", () => {
   });
 
   afterEach(async () => {
-    await (
-      await Cheese.findOne({ where: { title: "Lancashire Bomb" } })
-    ).destroy();
+    await db.sync({ force: true });
   });
 
   test("Cheese has title", () => {

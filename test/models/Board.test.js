@@ -1,4 +1,5 @@
 const Board = require("../../models/board.model");
+const db = require("../../db/db");
 
 describe("Test Board model for proper properties", () => {
   beforeEach(async () => {
@@ -11,7 +12,8 @@ describe("Test Board model for proper properties", () => {
   });
 
   afterEach(async () => {
-    await (await Board.findOne({ where: { type: "French" } })).destroy();
+    // await (await Board.findOne({ where: { type: "French" } })).destroy();
+    await db.sync({ force: true });
   });
 
   test("Board has a type", async () => {

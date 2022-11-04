@@ -1,5 +1,5 @@
 const User = require("../../models/user.model");
-
+const db = require("../../db/db");
 describe("Test User model properties, creation, update etc. If tests run, user creation and destruction works too.", () => {
   beforeEach(async () => {
     newUser = await User.create({
@@ -9,9 +9,10 @@ describe("Test User model properties, creation, update etc. If tests run, user c
   });
 
   afterEach(async () => {
-    await (
-      await User.findOne({ where: { name: "Charlie Whiteside" } })
-    ).destroy();
+    // await (
+    //   await User.findOne({ where: { name: "Charlie Whiteside" } })
+    //   ).destroy();
+    await db.sync({ force: true });
   });
 
   test("User has name", async () => {

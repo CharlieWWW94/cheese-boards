@@ -58,12 +58,21 @@ describe("Check for correct relationships between Models", () => {
     const gruyere = await Cheese.findOne({ where: { title: "Gruyere" } });
     await boards[0].addCheese(gruyere);
     await boards[1].addCheese(gruyere);
-    expect(await (await gruyere.getBoards()).length).toBe(2);
+    const { length } = await gruyere.getBoards();
+    expect(length).toBe(2);
   });
 
   test("Board can have multiple associated cheese", async () => {
     await boards[0].addCheese(cheeses[0]);
     await boards[0].addCheese(cheeses[1]);
-    expect(await (await boards[0].getCheeses()).length).toBe(2);
+    const { length } = await boards[0].getCheeses();
+    expect(length).toBe(2);
+  });
+
+  test("Eager loading test", async () => {
+    const eagerResult = await User.findAll({ include: Board });
+    eagerResultJson = eagerResult[0].toJSON();
+    const { length } = eagerResultJson["Boards"];
+    expect(length).toBe(3);
   });
 });
